@@ -22,3 +22,17 @@ The report counts matching failed-password and invalid-user log rows and
 prints each matching original row with its IP address. `ingest()` reads every
 regular file in the data directory, including gzip-compressed logs, and
 combines their rows in filename order.
+
+To open a grouped bar-chart dashboard of failed-password and invalid-user
+events by country from the rows stored in PostgreSQL, run:
+
+```powershell
+python -m serving.dashboard
+```
+
+The dashboard uses the same `DATABASE_URL` environment variable as the
+analysis program. Run `python main.py` first to ingest and store events.
+Events whose country is blank, `Unknown`, or `not found` are excluded from
+the chart. Bar labels show the count for each event type. The full-height
+chart is saved as `country_dashboard.svg` in the project directory and opened
+in the default browser, where all countries can be viewed by scrolling.
