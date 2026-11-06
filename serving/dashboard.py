@@ -95,7 +95,6 @@ def show_dashboard() -> None:
 
     axis.set_title(
         "SSH authentication events by country\n"
-        "(events without a known country are excluded)"
     )
     axis.tick_params(axis="y", labelsize=9)
     figure.tight_layout()

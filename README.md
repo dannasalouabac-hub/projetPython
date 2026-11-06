@@ -1,12 +1,14 @@
 # Log analysis
 
-Run the report from this directory with:
+Run the complete workflow from this directory with:
 
 ```powershell
 python main.py
 ```
 
-The program saves each failed-password and invalid-user event to PostgreSQL.
+The program reads all log files, analyzes them, saves failed-password and
+invalid-user events to PostgreSQL, then creates and opens the country
+dashboard.
 Set `DATABASE_URL` before running it, for example:
 
 ```powershell
@@ -23,15 +25,8 @@ prints each matching original row with its IP address. `ingest()` reads every
 regular file in the data directory, including gzip-compressed logs, and
 combines their rows in filename order.
 
-To open a grouped bar-chart dashboard of failed-password and invalid-user
-events by country from the rows stored in PostgreSQL, run:
-
-```powershell
-python -m serving.dashboard
-```
-
 The dashboard uses the same `DATABASE_URL` environment variable as the
-analysis program. Run `python main.py` first to ingest and store events.
+analysis program.
 Events whose country is blank, `Unknown`, or `not found` are excluded from
 the chart. Bar labels show the count for each event type. The full-height
 chart is saved as `country_dashboard.svg` in the project directory and opened
