@@ -7,8 +7,8 @@ python main.py
 ```
 
 The program reads all log files, analyzes them, saves failed-password and
-invalid-user events to PostgreSQL, then creates and opens the country
-dashboard.
+invalid-user events to PostgreSQL, then creates and opens both country
+dashboards: event type by country, and human/bot counts by country.
 Set `DATABASE_URL` before running it, for example:
 
 ```powershell
@@ -30,4 +30,5 @@ analysis program.
 Events whose country is blank, `Unknown`, or `not found` are excluded from
 the chart. Bar labels show the count for each event type. The full-height
 chart is saved as `country_dashboard.svg` in the project directory and opened
-in the default browser, where all countries can be viewed by scrolling.
+in the default browser, where all countries can be viewed by scrolling. The
+human/bot dashboard is saved as `country_actor_dashboard.svg`.

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from ingestion import read
 from processing import analyze
-from serving import dashboard
+from serving import actor_dashboard, dashboard
 from storage import database
 
 
@@ -12,6 +12,7 @@ def main():
     events = analyze.process_rows(rows)
     database.save_events(events) """
     dashboard.show_dashboard()
+    actor_dashboard.show_dashboard()
 
 
 if __name__ == "__main__":
