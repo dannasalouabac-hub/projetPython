@@ -1,11 +1,26 @@
 import requests as http
 
 
-from requests import Response
-
 def geo_location(ip):
-    response=http.get("https://ipinfo.io/"+ip+"/json")
-    if response.status_code==200:
-        print(response.json())
-if __name__=='__main__':
-    print(geo_location("88.147.152.239"))
+    try:
+        response = http.get(
+            "https://ipinfo.io/" + ip + "/json?token=c32cbc8d6525ac",
+            timeout=10,
+        )
+    except http.RequestException as error:
+        print(
+            f"Geolocation request failed for {ip} "
+            f"({type(error).__name__}); using Unknown."
+        )
+        return {"country": "Unknown", "city": "Unknown"}
+
+    if response.status_code == 200:
+        result = response.json()
+        return {
+            "country": result.get("country", "Unknown"),
+            "city": result.get("city", "Unknown"),
+        }
+    print("Geolocation request failed:", response.status_code)
+    return {"country": "Unknown", "city": "Unknown"}
+
+
