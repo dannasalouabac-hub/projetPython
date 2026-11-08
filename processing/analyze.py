@@ -4,9 +4,12 @@ import re
 from processing import extract_transform, geolocation
 
 
-def process_rows(rows: list[str]) -> list[tuple[str | None, str, str, str, str, str, str]]:
+def process_rows(
+    rows: list[str],
+) -> list[tuple[str | None, str, str, str, str | None, str | None, str | None, str]]:
     invalid_user = 0
     failed_password = 0
+    successful_connections = 0
     previous_ip = None
     previous_time = None
     events = []
@@ -32,22 +35,37 @@ def process_rows(rows: list[str]) -> list[tuple[str | None, str, str, str, str, 
             previous_ip = ip
             previous_time = event_time
 
-        if result not in ("Failed", "Invalid"):
+        if result not in ("Failed", "Invalid", "Accepted"):
             continue
 
         actor = "Bot" if bot else "Human"
-        location = geolocation.geo_location(ip)
-        city = location["city"]
-        country = location["country"]
+        username = None
+        if result == "Accepted":
+            username_match = re.search(
+                r"\bAccepted\s+\S+\s+for\s+(?:invalid user\s+)?(?P<username>\S+)\s+from\b",
+                row,
+            )
+            if not username_match:
+                continue
+            username = username_match.group("username")
+            city = None
+            country = None
+            successful_connections += 1
+            print(f"Successful connection | User: {username} | IP: {ip}")
+        else:
+            location = geolocation.geo_location(ip)
+            city = location["city"]
+            country = location["country"]
 
         if result == "Failed":
             failed_password += 1
             print(f"Failed password | IP: {ip} | {actor}")
-        else:
+        elif result == "Invalid":
             invalid_user += 1
             print(f"Invalid user | IP: {ip} | {actor}")
 
-        print(f"Location: {city}, {country}")
+        if city is not None and country is not None:
+            print(f"Location: {city}, {country}")
         events.append(
             (
                 time_match.group() if time_match else None,
@@ -56,10 +74,12 @@ def process_rows(rows: list[str]) -> list[tuple[str | None, str, str, str, str, 
                 actor,
                 city,
                 country,
+                username,
                 row.strip(),
             )
         )
 
     print(f"\nFailed password count: {failed_password}")
     print(f"Invalid user count: {invalid_user}")
+    print(f"Successful connection count: {successful_connections}")
     return events

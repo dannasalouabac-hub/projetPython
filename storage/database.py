@@ -18,15 +18,19 @@ def save_events(events):
                         actor TEXT NOT NULL,
                         city TEXT,
                         country TEXT,
+                        username TEXT,
                         message TEXT NOT NULL
                     )
                     """
                 )
+                cursor.execute(
+                    "ALTER TABLE auth_events ADD COLUMN IF NOT EXISTS username TEXT"
+                )
                 cursor.executemany(
                     """
                     INSERT INTO auth_events
-                        (event_time, event_type, ip, actor, city, country, message)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        (event_time, event_type, ip, actor, city, country, username, message)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                     """,
                     events,
                 )
