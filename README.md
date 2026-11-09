@@ -102,7 +102,7 @@ Le SGBD utilisé dans notre projet est PostgreSQL, choisi pour ses performances 
 
 Pour cela, nous avons créé un module nommé database.
 
-Dans ce module, nous avons importé un nouveau module, psycopg2, qui assure la connexion entre Python et PostgreSQL.
+Dans ce module, nous avons importé un nouveau module, psycopg2, qui assure la connexion entre Python et PostgreSQL grâce à la variable d'environnement declarée en terminal:$env:DATABASE_URL = "postgresql://postgres:********@localhost:5432/log_analysis"
 
 Nous avons également créé une fonction nommée save_events, qui prend en entrée la liste de tuples générée par la fonction process_rows et exécute deux requêtes principales :
 

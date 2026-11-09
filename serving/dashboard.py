@@ -53,14 +53,14 @@ def draw_dashboard(axis, country_counts: list[tuple[str, int, int]]) -> None:
             failed_passwords,
             height=bar_height,
             label="Failed password",
-            color="#d95f59",
+            color="#ccba16",
         )
         invalid_bars = axis.barh(
             [position + bar_height / 2 for position in positions],
             invalid_users,
             height=bar_height,
             label="Invalid user",
-            color="#4c8cbd",
+            color="#a1bbcf",
         )
         axis.bar_label(
             failed_bars,
@@ -127,7 +127,7 @@ def show_all_dashboards() -> None:
     actor_dashboard.draw_dashboard(actor_axis, actor_counts)
     successful_user_dashboard.draw_dashboard(user_axis, user_counts)
 
-    figure.suptitle("SSH Authentication Dashboard", fontsize=16)
+    figure.suptitle("Authentication Dashboard", fontsize=16)
     plt.show()
 
 

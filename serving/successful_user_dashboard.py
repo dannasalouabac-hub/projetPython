@@ -43,7 +43,7 @@ def draw_dashboard(axis, user_counts: list[tuple[str, int]]) -> None:
         bars = axis.barh(
             usernames,
             connection_counts,
-            color="#4c8cbd",
+            color="#2ecf2e",
         )
         axis.bar_label(
             bars,

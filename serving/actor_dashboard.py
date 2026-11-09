@@ -59,14 +59,14 @@ def draw_dashboard(axis, country_counts: list[tuple[str, int, int]]) -> None:
             humans,
             height=bar_height,
             label="Human",
-            color="#4c8cbd",
+            color="#ac34db",
         )
         bot_bars = axis.barh(
             [position + bar_height / 2 for position in positions],
             bots,
             height=bar_height,
             label="Bot",
-            color="#e08b3e",
+            color="#8b5f35",
         )
         axis.bar_label(
             human_bars,
