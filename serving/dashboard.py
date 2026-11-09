@@ -30,13 +30,7 @@ def fetch_country_counts() -> list[tuple[str, int, int]]:
     return sorted(rows, key=lambda row: row[1] + row[2], reverse=True)
 
 
-def show_dashboard() -> None:
-    country_counts = fetch_country_counts()[:20]
-    figure, axis = plt.subplots(
-        figsize=(12, max(5, 0.42 * len(country_counts))),
-        dpi=120,
-    )
-
+def draw_dashboard(axis, country_counts: list[tuple[str, int, int]]) -> None:
     if not country_counts:
         axis.text(
             0.5,
@@ -89,13 +83,53 @@ def show_dashboard() -> None:
         axis.set_axisbelow(True)
         axis.margins(x=0.12)
 
-    axis.set_title(
-        "SSH authentication events by country\n"
-    )
+    axis.set_title("SSH authentication events by country", pad=12)
     axis.tick_params(axis="y", labelsize=9)
+
+
+def show_dashboard() -> None:
+    country_counts = fetch_country_counts()[:20]
+    figure, axis = plt.subplots(
+        figsize=(12, max(5, 0.42 * len(country_counts))),
+        dpi=120,
+    )
+    draw_dashboard(axis, country_counts)
     figure.tight_layout()
     plt.show()
 
 
+def show_all_dashboards() -> None:
+    from serving import actor_dashboard, successful_user_dashboard
+
+    country_counts = fetch_country_counts()[:20]
+    actor_counts = actor_dashboard.fetch_country_actor_counts()[:20]
+    user_counts = successful_user_dashboard.fetch_successful_connection_counts()
+    country_chart_height = max(
+        7,
+        0.38 * max(len(country_counts), len(actor_counts)),
+    )
+    user_chart_height = max(4, 0.4 * len(user_counts))
+    figure = plt.figure(
+        figsize=(18, country_chart_height + user_chart_height + 1),
+        dpi=120,
+        constrained_layout=True,
+    )
+    grid = figure.add_gridspec(
+        2,
+        2,
+        height_ratios=(country_chart_height, user_chart_height),
+    )
+    country_axis = figure.add_subplot(grid[0, 0])
+    actor_axis = figure.add_subplot(grid[0, 1])
+    user_axis = figure.add_subplot(grid[1, :])
+
+    draw_dashboard(country_axis, country_counts)
+    actor_dashboard.draw_dashboard(actor_axis, actor_counts)
+    successful_user_dashboard.draw_dashboard(user_axis, user_counts)
+
+    figure.suptitle("SSH Authentication Dashboard", fontsize=16)
+    plt.show()
+
+
 if __name__ == "__main__":
-    show_dashboard()
+    show_all_dashboards()

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from ingestion import read
 from processing import analyze
-from serving import actor_dashboard, dashboard, successful_user_dashboard
+from serving import dashboard
 from storage import database
 
 
@@ -11,9 +11,7 @@ def main():
     rows = read.ingest(str(data_directory))
     events = analyze.process_rows(rows)
     database.save_events(events) """
-    dashboard.show_dashboard()
-    actor_dashboard.show_dashboard()
-    successful_user_dashboard.show_dashboard()
+    dashboard.show_all_dashboards()
 
 
 if __name__ == "__main__":

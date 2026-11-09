@@ -36,13 +36,7 @@ def fetch_country_actor_counts() -> list[tuple[str, int, int]]:
     return sorted(rows, key=lambda row: row[1] + row[2], reverse=True)
 
 
-def show_dashboard() -> None:
-    country_counts = fetch_country_actor_counts()[:20]
-    figure, axis = plt.subplots(
-        figsize=(12, max(5, 0.42 * len(country_counts))),
-        dpi=120,
-    )
-
+def draw_dashboard(axis, country_counts: list[tuple[str, int, int]]) -> None:
     if not country_counts:
         axis.text(
             0.5,
@@ -95,8 +89,17 @@ def show_dashboard() -> None:
         axis.set_axisbelow(True)
         axis.margins(x=0.12)
 
-    axis.set_title("Human and bot authentication events by country")
+    axis.set_title("Human and bot events by country", pad=12)
     axis.tick_params(axis="y", labelsize=9)
+
+
+def show_dashboard() -> None:
+    country_counts = fetch_country_actor_counts()[:20]
+    figure, axis = plt.subplots(
+        figsize=(12, max(5, 0.42 * len(country_counts))),
+        dpi=120,
+    )
+    draw_dashboard(axis, country_counts)
     figure.tight_layout()
     plt.show()
 

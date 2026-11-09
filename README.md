@@ -129,7 +129,7 @@ Il est assuré par le module dashboard, qui contient deux fonctions :
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction affiche une figure Matplotlib avec les 20 pays ayant le plus d'événements et un message au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction dessine sur un axe Matplotlib les 20 pays ayant le plus d'événements et affiche un message lorsqu'aucune donnée n'est disponible.
 
  2. Dashboard des types d'utilisateurs
 
@@ -143,7 +143,7 @@ Il est assuré par le module actor_dashboard, qui contient également deux fonct
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction affiche une figure Matplotlib avec les 20 pays ayant le plus d'événements et un message au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction dessine sur un axe Matplotlib les 20 pays ayant le plus d'événements et affiche un message lorsqu'aucune donnée n'est disponible.
 
  3. Dashboard des connexions réussies
 
@@ -157,17 +157,16 @@ Il est assuré par le module successful_user_dashboard, qui contient à son tour
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction affiche une figure Matplotlib à partir des résultats retournés par la première fonction. Elle affiche également un message au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction dessine sur un axe Matplotlib les résultats retournés par la première fonction et affiche un message lorsqu'aucune donnée n'est disponible.
 
-Afin d'assurer le fonctionnement des différentes fonctions, nous avons importé cinq modules :
+Afin d'assurer le fonctionnement des différentes fonctions, nous avons importé les modules suivants :
 
 - os :pour lire les variables d'environnement.
--pathlib :pour faciliter la manipulation des chemins d'accès.
-- webbrowser : pour ouvrir automatiquement les différents fichiers SVG dans le navigateur.
+- pathlib :pour faciliter la manipulation des chemins d'accès.
 - matplotlib.pyplot : pour construire les graphiques avec Python.
 - psycopg2 : pour assurer la connexion entre PostgreSQL et Python.
 
-Afin d'exécuter toutes les fonctions, nous avons eu recours au module main, dans lequel nous avons créé une fonction main qui appelle toutes les fonctions dans un ordre précis : lecture des fichiers, extraction des informations nécessaires, traitement des données, stockage des résultats et, enfin, affichage des différents dashboards.
+Afin d'exécuter toutes les fonctions, nous avons eu recours au module main, dans lequel nous avons créé une fonction main qui appelle toutes les fonctions dans un ordre précis : lecture des fichiers, extraction des informations nécessaires, traitement des données, stockage des résultats et, enfin, affichage des trois dashboards dans une seule figure Matplotlib.
 
 Les adresses IP associées aux résultats UNKNOWN ou NOT FOUND sont exclues de l'affichage.
 

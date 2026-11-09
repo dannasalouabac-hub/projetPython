@@ -26,13 +26,7 @@ def fetch_successful_connection_counts() -> list[tuple[str, int]]:
     return rows
 
 
-def show_dashboard() -> None:
-    user_counts = fetch_successful_connection_counts()
-    figure, axis = plt.subplots(
-        figsize=(12, max(5, 0.45 * len(user_counts))),
-        dpi=120,
-    )
-
+def draw_dashboard(axis, user_counts: list[tuple[str, int]]) -> None:
     if not user_counts:
         axis.text(
             0.5,
@@ -64,8 +58,17 @@ def show_dashboard() -> None:
         axis.set_axisbelow(True)
         axis.margins(x=0.12)
 
-    axis.set_title("connections by user")
+    axis.set_title("Successful connections by user", pad=12)
     axis.tick_params(axis="y", labelsize=9)
+
+
+def show_dashboard() -> None:
+    user_counts = fetch_successful_connection_counts()
+    figure, axis = plt.subplots(
+        figsize=(12, max(5, 0.45 * len(user_counts))),
+        dpi=120,
+    )
+    draw_dashboard(axis, user_counts)
     figure.tight_layout()
     plt.show()
 
