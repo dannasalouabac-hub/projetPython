@@ -129,7 +129,7 @@ Il est assuré par le module dashboard, qui contient deux fonctions :
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction permet de créer le fichier SVG country_dashboard.svg à partir des résultats retournés par la première fonction. Elle affiche également un message d'erreur au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction affiche une figure Matplotlib avec les 20 pays ayant le plus d'événements et un message au centre du graphique lorsqu'aucune donnée n'est disponible.
 
  2. Dashboard des types d'utilisateurs
 
@@ -143,7 +143,7 @@ Il est assuré par le module actor_dashboard, qui contient également deux fonct
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction permet de créer le fichier SVG country_actor_dashboard.svg à partir des résultats retournés par la première fonction. Elle affiche également un message d'erreur au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction affiche une figure Matplotlib avec les 20 pays ayant le plus d'événements et un message au centre du graphique lorsqu'aucune donnée n'est disponible.
 
  3. Dashboard des connexions réussies
 
@@ -157,7 +157,7 @@ Il est assuré par le module successful_user_dashboard, qui contient à son tour
 
 - Deuxième fonction :show_dashboard
 
-  Cette fonction permet de créer le fichier SVG successful_connections_by_user.svg à partir des résultats retournés par la première fonction. Elle affiche également un message d'erreur au centre du graphique lorsqu'aucune donnée n'est disponible.
+  Cette fonction affiche une figure Matplotlib à partir des résultats retournés par la première fonction. Elle affiche également un message au centre du graphique lorsqu'aucune donnée n'est disponible.
 
 Afin d'assurer le fonctionnement des différentes fonctions, nous avons importé cinq modules :
 

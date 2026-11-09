@@ -1,13 +1,7 @@
 import os
-from pathlib import Path
-import webbrowser
 
 import matplotlib.pyplot as plt
 import psycopg2
-
-SUCCESSFUL_USER_DASHBOARD_PATH = (
-    Path(__file__).resolve().parents[1] / "successful_connections_by_user.svg"
-)
 
 
 def fetch_successful_connection_counts() -> list[tuple[str, int]]:
@@ -73,22 +67,7 @@ def show_dashboard() -> None:
     axis.set_title("connections by user")
     axis.tick_params(axis="y", labelsize=9)
     figure.tight_layout()
-    figure.savefig(
-        SUCCESSFUL_USER_DASHBOARD_PATH,
-        format="svg",
-        bbox_inches="tight",
-    )
-    plt.close(figure)
-    if webbrowser.open(SUCCESSFUL_USER_DASHBOARD_PATH.as_uri()):
-        print(
-            "Successful-connections dashboard opened: "
-            f"{SUCCESSFUL_USER_DASHBOARD_PATH}"
-        )
-    else:
-        print(
-            "Successful-connections dashboard saved; open this file in a "
-            f"browser: {SUCCESSFUL_USER_DASHBOARD_PATH}"
-        )
+    plt.show()
 
 
 if __name__ == "__main__":

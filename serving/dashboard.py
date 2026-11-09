@@ -1,11 +1,7 @@
 import os
-from pathlib import Path
-import webbrowser
 
 import matplotlib.pyplot as plt
 import psycopg2
-
-DASHBOARD_PATH = Path(__file__).resolve().parents[1] / "country_dashboard.svg"
 
 
 def fetch_country_counts() -> list[tuple[str, int, int]]:
@@ -35,7 +31,7 @@ def fetch_country_counts() -> list[tuple[str, int, int]]:
 
 
 def show_dashboard() -> None:
-    country_counts = fetch_country_counts()
+    country_counts = fetch_country_counts()[:20]
     figure, axis = plt.subplots(
         figsize=(12, max(5, 0.42 * len(country_counts))),
         dpi=120,
@@ -98,12 +94,7 @@ def show_dashboard() -> None:
     )
     axis.tick_params(axis="y", labelsize=9)
     figure.tight_layout()
-    figure.savefig(DASHBOARD_PATH, format="svg", bbox_inches="tight")
-    plt.close(figure)
-    if webbrowser.open(DASHBOARD_PATH.as_uri()):
-        print(f"Dashboard opened in your browser: {DASHBOARD_PATH}")
-    else:
-        print(f"Dashboard saved; open this file in a browser: {DASHBOARD_PATH}")
+    plt.show()
 
 
 if __name__ == "__main__":
